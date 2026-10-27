@@ -155,15 +155,9 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
   display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center;
   padding-top: 72px; padding-bottom: 16px;
 }
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 6px 14px 6px 10px; border: 1px solid var(--line); border-radius: 999px;
-  font: 500 13px var(--mono); color: var(--muted); background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-}
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ccf6a; box-shadow: 0 0 0 0 rgba(60,207,106,.6); animation: pulse 2s infinite; }
 @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(60,207,106,0); } 100% { box-shadow: 0 0 0 0 rgba(60,207,106,0); } }
 .hero__title {
-  margin-top: 28px;
   font-family: var(--serif); font-size: clamp(52px, 8.2vw, 112px); line-height: .95; letter-spacing: -.02em;
 }
 .hero__title em { font-style: italic; color: var(--accent); }
@@ -191,10 +185,10 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .photo-tag {
   position: absolute; left: -24px; bottom: 32px;
+  display: inline-flex; align-items: center; gap: 10px; font-weight: 500;
   padding: 12px 18px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line);
   box-shadow: 0 18px 40px -18px rgba(0,0,0,.35);
 }
-.photo-tag span { color: var(--accent); font-weight: 500; }
 
 /* ---------- Sections ---------- */
 .section { padding-top: 112px; padding-bottom: 8px; }
