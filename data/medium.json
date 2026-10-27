@@ -1,1 +1,43 @@
-[]
+[
+  {
+    "title": "Prediksi Harga Saham PT Bank Central Asia Tbk (BBCA) Menggunakan Long Short-Term Memory…",
+    "link": "https://medium.com/@ronihalimsaputra/prediksi-harga-saham-pt-bank-central-asia-tbk-bbca-menggunakan-long-short-term-memory-5fe5bcb97aad",
+    "date": "2025-12-12",
+    "excerpt": "Prediksi Harga Saham PT Bank Central Asia Tbk (BBCA) Menggunakan Long Short-Term Memory (LSTM)-Data Trend 2005–2025 PT Bank Central Asia Tbk (BCA) adalah bank…",
+    "image": "https://cdn-images-1.medium.com/max/1024/1*VhJLoqsVDfSpS95c_QhXJw.png",
+    "tags": [
+      "bbca",
+      "pytorch",
+      "lstm",
+      "stock-market",
+      "deep-learning"
+    ]
+  },
+  {
+    "title": "Cryptography Face-Off: RSA vs. ChaCha20 in Optimizing Email Encryption for Speed and Safety",
+    "link": "https://medium.com/@ronihalimsaputra/cryptography-face-off-rsa-vs-chacha20-in-optimizing-email-encryption-for-speed-and-safety-030266883aa2",
+    "date": "2025-09-04",
+    "excerpt": "When was the last time you thought about how secure your emails really are? Probably not very often — we usually just hit “send” and assume everything is safe.…",
+    "image": "https://cdn-images-1.medium.com/max/1024/1*bOe4ON6_hI8dua8YjjYAeg.png",
+    "tags": [
+      "data-science",
+      "cryptography",
+      "technology",
+      "programming"
+    ]
+  },
+  {
+    "title": "Data Science for Transportation: 4PL-Powered Pricing Optimization with Python",
+    "link": "https://medium.com/@ronihalimsaputra/data-science-for-transportation-4pl-powered-pricing-optimization-with-python-e5f35e119cd2",
+    "date": "2025-09-04",
+    "excerpt": "Have you ever wonder how companies like Gojek , Grab , Maxim , Lalamove , or Deliveree figure out their per-kilometer delivery fees? Maybe you’ve noticed that…",
+    "image": "https://cdn-images-1.medium.com/max/1024/1*azvl52KPJtZhDErHlXWouQ.png",
+    "tags": [
+      "data-science",
+      "logistics",
+      "transportation",
+      "technology",
+      "startup"
+    ]
+  }
+]
