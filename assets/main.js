@@ -41,6 +41,30 @@
     });
   }
 
+  function getJSON(url) {
+    return fetch(url, { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+  }
+
+  // Coba sumber satu per satu sampai ada yang menghasilkan daftar tidak kosong
+  function loadFirst(sources) {
+    return sources.reduce(function (p, src) {
+      return p.catch(function () {
+        return src().then(function (list) {
+          if (!list || !list.length) throw new Error('empty');
+          return list;
+        });
+      });
+    }, Promise.reject());
+  }
+
+  function excerpt(raw) {
+    var text = (raw || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    return text.length > 150 ? text.slice(0, 150).replace(/\s\S*$/, '') + '…' : text;
+  }
+
   // Tampilkan bagian opsional bila datanya sudah diisi
   function enable(key) {
     document.querySelectorAll('[data-optional="' + key + '"]').forEach(function (el) { el.hidden = false; });
@@ -111,18 +135,25 @@
     document.getElementById('mediumSocial').href = mediumUrl;
     var postList = document.getElementById('postList');
     var fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-    fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://medium.com/feed/@' + MEDIUM_USER))
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function (data) {
-        var items = (data.items || []).slice(0, 6);
-        if (!items.length) throw new Error('empty');
-        postList.innerHTML = items.map(function (it) {
-          var text = (it.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-          if (text.length > 150) text = text.slice(0, 150).replace(/\s\S*$/, '') + '…';
-          var date = it.pubDate ? fmt.format(new Date(it.pubDate.replace(' ', 'T') + 'Z')) : '';
+    // Data lokal (diperbarui GitHub Actions), lalu rss2json sebagai cadangan
+    loadFirst([
+      function () { return getJSON('data/medium.json'); },
+      function () {
+        return getJSON('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://medium.com/feed/@' + MEDIUM_USER))
+          .then(function (d) {
+            return (d.items || []).map(function (it) {
+              return { title: it.title, link: it.link, date: (it.pubDate || '').slice(0, 10), excerpt: excerpt(it.description), image: it.thumbnail };
+            });
+          });
+      }
+    ])
+      .then(function (posts) {
+        postList.innerHTML = posts.slice(0, 6).map(function (it) {
+          var date = it.date ? fmt.format(new Date(it.date + 'T00:00:00')) : '';
           return '<a class="post" href="' + esc(it.link) + '" target="_blank" rel="noopener">' +
+            (it.image ? '<img class="post__img" src="' + esc(it.image) + '" alt="" loading="lazy" onerror="this.remove()">' : '') +
             '<span class="post__date mono">' + esc(date) + '</span>' +
-            '<h3>' + esc(it.title) + '</h3><p>' + esc(text) + '</p>' +
+            '<h3>' + esc(it.title) + '</h3><p>' + esc(it.excerpt || '') + '</p>' +
             '<span class="post__more mono">Baca di Medium →</span></a>';
         }).join('');
       })
@@ -139,18 +170,22 @@
       '<div class="projects__empty">Proyek tersedia di GitHub — <a href="https://github.com/' + GITHUB_USER +
       '?tab=repositories" target="_blank" rel="noopener">lihat semua repositori</a>.</div>';
   }
-  fetch('https://api.github.com/users/' + GITHUB_USER + '/repos?per_page=100&sort=updated')
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (repos) {
-      var items = repos
-        .filter(function (r) {
-          if (r.fork || r.name.toLowerCase() === GITHUB_USER + '.github.io') return false;
-          var hay = [r.name, r.description || '', r.language || '', (r.topics || []).join(' ')].join(' ');
-          return r.language === 'Jupyter Notebook' || AI_KEYWORDS.test(hay);
-        })
-        .sort(function (a, b) { return b.stargazers_count - a.stargazers_count || new Date(b.pushed_at) - new Date(a.pushed_at); })
-        .slice(0, 9);
-      if (!items.length) return showEmpty();
+  function aiRepos(repos) {
+    return repos
+      .filter(function (r) {
+        if (r.fork || r.name.toLowerCase() === GITHUB_USER + '.github.io') return false;
+        var hay = [r.name, r.description || '', r.language || '', (r.topics || []).join(' ')].join(' ');
+        return r.language === 'Jupyter Notebook' || AI_KEYWORDS.test(hay);
+      })
+      .sort(function (a, b) { return b.stargazers_count - a.stargazers_count || new Date(b.pushed_at) - new Date(a.pushed_at); })
+      .slice(0, 9);
+  }
+  // Data lokal (diperbarui GitHub Actions), lalu API GitHub sebagai cadangan
+  loadFirst([
+    function () { return getJSON('data/repos.json').then(aiRepos); },
+    function () { return getJSON('https://api.github.com/users/' + GITHUB_USER + '/repos?per_page=100&sort=updated').then(aiRepos); }
+  ])
+    .then(function (items) {
       projectList.innerHTML = items.map(function (r) {
         return '<a class="project" href="' + esc(r.html_url) + '" target="_blank" rel="noopener">' +
           '<div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>' +

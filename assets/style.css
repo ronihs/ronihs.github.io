@@ -193,11 +193,12 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 /* Tulisan */
 .posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .post {
-  display: flex; flex-direction: column; gap: 12px; min-height: 230px; padding: 26px;
+  display: flex; flex-direction: column; gap: 12px; min-height: 230px; padding: 26px; overflow: hidden;
   border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line);
   transition: transform .3s, border-color .3s;
 }
 a.post:hover { transform: translateY(-4px); border-color: var(--accent); }
+.post__img { width: calc(100% + 52px); margin: -26px -26px 4px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; background: var(--bg-2); }
 .post__date { color: var(--muted); }
 .post h3 { font-family: var(--serif); font-size: 26px; line-height: 1.15; }
 .post p { color: var(--muted); font-size: 14.5px; flex: 1; }
