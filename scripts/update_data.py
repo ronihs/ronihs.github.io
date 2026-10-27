@@ -43,10 +43,10 @@ def inject(kind, cards):
     """Replace the <!-- kind:start --> ... <!-- kind:end --> block in index.html."""
     with open(INDEX, encoding="utf-8") as f:
         page = f.read()
-    body = "".join("        " + c + "\n" for c in cards)
+    block = "".join(f"\n        {c}" for c in cards)
     page, n = re.subn(
-        rf"(<!-- {kind}:start -->\n).*?(\s*<!-- {kind}:end -->)",
-        lambda m: m.group(1) + body.rstrip("\n") + m.group(2) if cards else m.group(1).rstrip("\n") + m.group(2),
+        rf"<!-- {kind}:start -->.*?<!-- {kind}:end -->",
+        lambda m: f"<!-- {kind}:start -->{block}\n        <!-- {kind}:end -->",
         page, flags=re.S)
     if n != 1:
         raise RuntimeError(f"marker for {kind} not found in index.html")
