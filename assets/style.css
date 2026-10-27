@@ -156,7 +156,6 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .section { padding-top: 112px; padding-bottom: 8px; }
 .section__head { display: flex; align-items: baseline; gap: 18px; padding-bottom: 22px; margin-bottom: 44px; border-bottom: 1px solid var(--line); }
 .section__head h2 { font-family: var(--serif); font-size: clamp(40px, 5vw, 60px); line-height: 1; }
-.section__num { color: var(--accent); }
 .section__link { margin-left: auto; color: var(--muted); transition: color .2s; }
 .section__link:hover { color: var(--text); }
 
@@ -233,10 +232,10 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
   content: ""; position: absolute; right: -120px; top: -120px; width: 360px; height: 360px; border-radius: 50%;
   background: var(--accent); opacity: .18; filter: blur(30px);
 }
-.contact .section__num { color: var(--accent); }
-:root:not([data-theme="dark"]) .contact .section__num { color: #8fb8ff; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact .section__num { color: var(--accent-ink); } }
-:root[data-theme="dark"] .contact .section__num { color: var(--accent-ink); }
+.contact .contact__label { color: var(--accent); }
+:root:not([data-theme="dark"]) .contact .contact__label { color: #8fb8ff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact .contact__label { color: var(--accent-ink); } }
+:root[data-theme="dark"] .contact .contact__label { color: var(--accent-ink); }
 .contact__title { margin-top: 22px; font-family: var(--serif); font-size: clamp(44px, 6.5vw, 88px); line-height: 1; }
 .contact__title em { font-style: italic; opacity: .7; }
 .contact__mail {

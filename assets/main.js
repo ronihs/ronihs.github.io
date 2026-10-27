@@ -165,11 +165,6 @@
     })
     .catch(showEmpty);
 
-  // Nomor bagian mengikuti bagian yang tampil
-  document.querySelectorAll('main section:not([hidden]) .section__num').forEach(function (el, i) {
-    el.textContent = el.textContent.replace(/^\d+/, String(i + 1).padStart(2, '0'));
-  });
-
   // ---------- Reveal on scroll ----------
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
