@@ -1,18 +1,33 @@
 (function () {
+  // ---------- Konfigurasi ----------
   var GITHUB_USER = 'ronihs';
 
-  var SKILLS = [
-    { name: 'Python', level: 75 },
-    { name: 'HTML', level: 60 },
-    { name: 'JavaScript', level: 60 },
-    { name: 'Kotlin', level: 55 },
-    { name: 'C / C++', level: 50 },
-    { name: 'C#', level: 40 },
-    { name: 'Go', level: 30 },
-    { name: 'Flutter', level: 20 }
-  ];
+  // Isi dengan URL profil Google Scholar, mis. 'https://scholar.google.com/citations?user=XXXX'
+  var SCHOLAR_URL = 'https://scholar.google.co.id/citations?user=vs16vi0AAAAJ&hl=id';
+
+  // Isi dengan username Medium tanpa '@', mis. 'ronihalim'
+  var MEDIUM_USER = 'ronihalimsaputra';
+
+  // Daftar penelitian (dari Google Scholar). Contoh:
+  // { title: 'Judul penelitian', venue: 'Nama Jurnal, Vol. 1 No. 2', year: 2024, url: 'https://...' }
+  var PUBLICATIONS = [];
+
+  // Kata kunci untuk memilih repo AI / ML / DL dari GitHub
+  var AI_KEYWORDS = /(\bai\b|ml|machine|learning|deep|neural|\bnn\b|cnn|rnn|lstm|gan|torch|tensorflow|keras|llm|rag|nlp|vision|spark|classif|predict|regress|cluster|model|data)/i;
 
   var root = document.documentElement;
+
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // Tampilkan bagian opsional bila datanya sudah diisi
+  function enable(key) {
+    document.querySelectorAll('[data-optional="' + key + '"]').forEach(function (el) { el.hidden = false; });
+  }
+  document.querySelectorAll('[data-optional]').forEach(function (el) { el.hidden = true; });
 
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -42,22 +57,99 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Skills
-  var list = document.getElementById('skillList');
-  SKILLS.forEach(function (s) {
-    var on = Math.round(s.level / 5);
-    var cells = '';
-    for (var i = 0; i < 20; i++) cells += '<i' + (i < on ? ' class="on" style="transition-delay:' + (i * 30) + 'ms"' : '') + '></i>';
-    var li = document.createElement('li');
-    li.className = 'skill reveal';
-    li.innerHTML =
-      '<div class="skill__row"><span class="skill__name">' + s.name + '</span>' +
-      '<span class="skill__pct mono">' + s.level + '%</span></div>' +
-      '<div class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + s.level + '" aria-label="' + s.name + '">' + cells + '</div>';
-    list.appendChild(li);
+  // ---------- Penelitian ----------
+  if (SCHOLAR_URL || PUBLICATIONS.length) {
+    enable('research');
+    ['scholarLink', 'scholarSocial'].forEach(function (id) {
+      var a = document.getElementById(id);
+      if (SCHOLAR_URL) a.href = SCHOLAR_URL;
+      else a.parentNode.removeChild(a);
+    });
+    var pubList = document.getElementById('pubList');
+    if (PUBLICATIONS.length) {
+      pubList.innerHTML = PUBLICATIONS
+        .slice()
+        .sort(function (a, b) { return (b.year || 0) - (a.year || 0); })
+        .map(function (p) {
+          var title = p.url
+            ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.title) + '</a>'
+            : esc(p.title);
+          return '<li class="pub reveal"><span class="pub__year mono">' + esc(p.year || '') + '</span>' +
+            '<div><h3>' + title + '</h3>' + (p.venue ? '<p>' + esc(p.venue) + '</p>' : '') + '</div></li>';
+        }).join('');
+    } else {
+      pubList.innerHTML = '<li class="projects__empty">Daftar lengkap penelitian tersedia di ' +
+        '<a href="' + esc(SCHOLAR_URL) + '" target="_blank" rel="noopener">Google Scholar</a>.</li>';
+    }
+  }
+
+  // ---------- Tulisan (Medium) ----------
+  if (MEDIUM_USER) {
+    enable('writing');
+    var mediumUrl = 'https://medium.com/@' + MEDIUM_USER;
+    document.getElementById('mediumLink').href = mediumUrl;
+    document.getElementById('mediumSocial').href = mediumUrl;
+    var postList = document.getElementById('postList');
+    var fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://medium.com/feed/@' + MEDIUM_USER))
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) {
+        var items = (data.items || []).slice(0, 6);
+        if (!items.length) throw new Error('empty');
+        postList.innerHTML = items.map(function (it) {
+          var text = (it.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+          if (text.length > 150) text = text.slice(0, 150).replace(/\s\S*$/, '') + '…';
+          var date = it.pubDate ? fmt.format(new Date(it.pubDate.replace(' ', 'T') + 'Z')) : '';
+          return '<a class="post" href="' + esc(it.link) + '" target="_blank" rel="noopener">' +
+            '<span class="post__date mono">' + esc(date) + '</span>' +
+            '<h3>' + esc(it.title) + '</h3><p>' + esc(text) + '</p>' +
+            '<span class="post__more mono">Baca di Medium →</span></a>';
+        }).join('');
+      })
+      .catch(function () {
+        postList.innerHTML = '<div class="projects__empty">Baca tulisan saya di ' +
+          '<a href="' + esc(mediumUrl) + '" target="_blank" rel="noopener">Medium</a>.</div>';
+      });
+  }
+
+  // ---------- Proyek dari GitHub ----------
+  var projectList = document.getElementById('projectList');
+  function showEmpty() {
+    projectList.innerHTML =
+      '<div class="projects__empty">Proyek tersedia di GitHub — <a href="https://github.com/' + GITHUB_USER +
+      '?tab=repositories" target="_blank" rel="noopener">lihat semua repositori</a>.</div>';
+  }
+  fetch('https://api.github.com/users/' + GITHUB_USER + '/repos?per_page=100&sort=updated')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (repos) {
+      var items = repos
+        .filter(function (r) {
+          if (r.fork || r.name.toLowerCase() === GITHUB_USER + '.github.io') return false;
+          var hay = [r.name, r.description || '', r.language || '', (r.topics || []).join(' ')].join(' ');
+          return r.language === 'Jupyter Notebook' || AI_KEYWORDS.test(hay);
+        })
+        .sort(function (a, b) { return b.stargazers_count - a.stargazers_count || new Date(b.pushed_at) - new Date(a.pushed_at); })
+        .slice(0, 9);
+      if (!items.length) return showEmpty();
+      projectList.innerHTML = items.map(function (r) {
+        return '<a class="project" href="' + esc(r.html_url) + '" target="_blank" rel="noopener">' +
+          '<div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></div>' +
+          '<h3>' + esc(r.name) + '</h3>' +
+          '<p>' + esc(r.description || 'Belum ada deskripsi.') + '</p>' +
+          '<div class="project__meta mono">' +
+          (r.language ? '<span><span class="lang-dot"></span>' + esc(r.language) + '</span>' : '') +
+          '<span>★ ' + r.stargazers_count + '</span></div></a>';
+      }).join('');
+    })
+    .catch(showEmpty);
+
+  // Nomor bagian mengikuti bagian yang tampil
+  document.querySelectorAll('main section:not([hidden]) .section__num').forEach(function (el, i) {
+    el.textContent = el.textContent.replace(/^\d+/, String(i + 1).padStart(2, '0'));
   });
 
-  // Reveal on scroll
+  // ---------- Reveal on scroll ----------
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
@@ -70,7 +162,7 @@
     reveals.forEach(function (el) { el.classList.add('is-in'); });
   }
 
-  // Active nav link
+  // ---------- Active nav link ----------
   var links = document.querySelectorAll('.nav__links a');
   if ('IntersectionObserver' in window) {
     var secIo = new IntersectionObserver(function (entries) {
@@ -81,37 +173,4 @@
     }, { rootMargin: '-45% 0px -50% 0px' });
     document.querySelectorAll('main section[id]').forEach(function (s) { secIo.observe(s); });
   }
-
-  // Projects from GitHub
-  var projectList = document.getElementById('projectList');
-  function esc(str) {
-    return String(str).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-  function showEmpty() {
-    projectList.innerHTML =
-      '<div class="projects__empty">Projects are on GitHub — <a href="https://github.com/' + GITHUB_USER +
-      '?tab=repositories" target="_blank" rel="noopener">browse all repositories</a>.</div>';
-  }
-  fetch('https://api.github.com/users/' + GITHUB_USER + '/repos?per_page=100&sort=updated')
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (repos) {
-      var items = repos
-        .filter(function (r) { return !r.fork && r.name.toLowerCase() !== GITHUB_USER + '.github.io'; })
-        .sort(function (a, b) { return b.stargazers_count - a.stargazers_count || new Date(b.pushed_at) - new Date(a.pushed_at); })
-        .slice(0, 6);
-      if (!items.length) return showEmpty();
-      projectList.innerHTML = items.map(function (r) {
-        return '<a class="project reveal is-in" href="' + esc(r.html_url) + '" target="_blank" rel="noopener">' +
-          '<div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>' +
-          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></div>' +
-          '<h3>' + esc(r.name) + '</h3>' +
-          '<p>' + esc(r.description || 'No description yet.') + '</p>' +
-          '<div class="project__meta mono">' +
-          (r.language ? '<span><span class="lang-dot"></span>' + esc(r.language) + '</span>' : '') +
-          '<span>★ ' + r.stargazers_count + '</span></div></a>';
-      }).join('');
-    })
-    .catch(showEmpty);
 })();

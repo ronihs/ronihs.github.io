@@ -1,12 +1,13 @@
 # ronihs.github.io
 
-Personal portfolio of Roni Halim Saputra — https://ronihs.github.io/
+Portofolio Roni Halim Saputra, M.Kom — https://ronihs.github.io/
 
-Static site, no build step:
+Situs statis tanpa proses build:
 
-- `index.html` — page content
-- `assets/style.css` — styles (light/dark theme)
-- `assets/main.js` — skills list, theme toggle, and projects loaded from the GitHub API
-- `images/` — photos
-
-Edit the `SKILLS` array in `assets/main.js` to update skills.
+- `index.html` — isi halaman (tentang, pengalaman, pendidikan, kontak)
+- `assets/style.css` — tampilan (tema terang/gelap)
+- `assets/main.js` — konfigurasi di bagian atas:
+  - `SCHOLAR_URL` dan `PUBLICATIONS` — daftar penelitian (Google Scholar)
+  - `MEDIUM_USER` — tulisan Medium dimuat otomatis
+  - `AI_KEYWORDS` — penyaring repo GitHub untuk bagian Proyek AI/ML/DL
+- `images/` — foto
