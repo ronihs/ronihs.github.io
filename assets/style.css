@@ -123,7 +123,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 }
 .nav.is-scrolled { border-color: var(--line); }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; white-space: nowrap; }
 .brand__mark {
   display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
   background: var(--text); color: var(--bg); font: 500 13px var(--mono);
@@ -148,6 +148,12 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
   :root:not([data-theme="light"]) .i-moon { display: block; }
 }
 .nav__menu { display: none; }
+.nav__cv {
+  display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 12px;
+  background: var(--text); color: var(--bg); font-size: 14px; font-weight: 600; transition: opacity .2s;
+}
+.nav__cv:hover { opacity: .85; }
+.nav__cv svg { width: 17px; height: 17px; }
 .mobile-menu { display: none; }
 
 /* ---------- Hero ---------- */
@@ -170,7 +176,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 }
 .btn svg { width: 18px; height: 18px; transition: transform .2s; }
 .btn--primary { background: var(--text); color: var(--bg); }
-.btn--primary:hover svg { transform: translateX(4px); }
+.btn--primary:hover svg { transform: translateY(2px); }
 .btn--ghost { border: 1px solid var(--line); background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .btn--ghost:hover { border-color: var(--muted); }
 .btn:active { transform: scale(.97); }
@@ -297,7 +303,8 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
   border: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); font-size: 14px; font-weight: 500;
   transition: background .2s, color .2s;
 }
-.socials a:hover { background: var(--bg); color: var(--text); }
+.socials a:hover, .socials a.socials__cv { background: var(--bg); color: var(--text); }
+.socials a.socials__cv:hover { opacity: .85; }
 .socials svg { width: 18px; height: 18px; }
 
 /* Footer */
@@ -309,6 +316,17 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
 .js .reveal.is-in { opacity: 1; transform: none; }
 
 /* ---------- Responsive ---------- */
+/* Menu ringkas saat tautan navigasi tidak muat */
+@media (max-width: 1080px) {
+  .nav__links { display: none; }
+  .nav__menu { display: grid; }
+  .mobile-menu {
+    display: grid; overflow: hidden; max-height: 0; transition: max-height .35s ease;
+    background: var(--bg); padding: 0 24px;
+  }
+  .mobile-menu.is-open { max-height: 420px; border-bottom: 1px solid var(--line); }
+  .mobile-menu a { padding: 14px 0; border-top: 1px solid var(--line); font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.02em; }
+}
 @media (max-width: 960px) {
   .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 48px; }
   .hero__photo { justify-self: start; max-width: 380px; }
@@ -316,15 +334,9 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
   .projects, .posts { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {
-  .wrap { padding: 0 16px; }
-  .nav__links { display: none; }
-  .nav__menu { display: grid; }
-  .mobile-menu {
-    display: grid; overflow: hidden; max-height: 0; transition: max-height .35s ease;
-    background: var(--bg); padding: 0 16px;
-  }
-  .mobile-menu.is-open { max-height: 360px; border-bottom: 1px solid var(--line); }
-  .mobile-menu a { padding: 14px 0; border-top: 1px solid var(--line); font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.02em; }
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  .nav__cv { display: none; }
+  .mobile-menu { padding: 0 16px; }
   .brand__name { display: none; }
   .projects, .posts { grid-template-columns: 1fr; }
   .tl { grid-template-columns: 1fr; gap: 6px; }
