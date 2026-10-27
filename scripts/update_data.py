@@ -10,7 +10,14 @@ from email.utils import parsedate_to_datetime
 
 GITHUB_USER = "ronihs"
 MEDIUM_USER = "ronihalimsaputra"
-OUT = os.path.join(os.path.dirname(__file__), "..", "data")
+ROOT = os.path.join(os.path.dirname(__file__), "..")
+OUT = os.path.join(ROOT, "data")
+INDEX = os.path.join(ROOT, "index.html")
+AI_KEYWORDS = re.compile(r"(\bai\b|ml|machine|learning|deep|neural|\bnn\b|cnn|rnn|lstm|gan|torch|tensorflow|keras|llm|rag|nlp|vision|spark|classif|predict|regress|cluster|model|data)", re.I)
+MONTHS = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
+          "Agustus", "September", "Oktober", "November", "Desember"]
+FOLDER_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>'
+ARROW_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>'
 UA = "Mozilla/5.0 (compatible; ronihs.github.io data updater)"
 
 
@@ -26,6 +33,66 @@ def write(name, data):
         json.dump(data, f, ensure_ascii=False, indent=2)
         f.write("\n")
     print(f"wrote {path} ({len(data)} items)")
+
+
+def esc(value):
+    return html.escape(str(value or ""), quote=True)
+
+
+def inject(kind, cards):
+    """Replace the <!-- kind:start --> ... <!-- kind:end --> block in index.html."""
+    with open(INDEX, encoding="utf-8") as f:
+        page = f.read()
+    body = "".join("        " + c + "\n" for c in cards)
+    page, n = re.subn(
+        rf"(<!-- {kind}:start -->\n).*?(\s*<!-- {kind}:end -->)",
+        lambda m: m.group(1) + body.rstrip("\n") + m.group(2) if cards else m.group(1).rstrip("\n") + m.group(2),
+        page, flags=re.S)
+    if n != 1:
+        raise RuntimeError(f"marker for {kind} not found in index.html")
+    with open(INDEX, "w", encoding="utf-8") as f:
+        f.write(page)
+
+
+def ai_repos(repos):
+    picked = []
+    for r in repos:
+        if r.get("fork") or r["name"].lower() == f"{GITHUB_USER}.github.io":
+            continue
+        hay = " ".join([r["name"], r.get("description") or "", r.get("language") or "", " ".join(r.get("topics") or [])])
+        if r.get("language") == "Jupyter Notebook" or AI_KEYWORDS.search(hay):
+            picked.append(r)
+    picked.sort(key=lambda r: r.get("pushed_at") or "", reverse=True)
+    picked.sort(key=lambda r: r.get("stargazers_count") or 0, reverse=True)
+    return picked[:9]
+
+
+def repo_card(r):
+    lang = f'<span><span class="lang-dot"></span>{esc(r["language"])}</span>' if r.get("language") else ""
+    return (f'<a class="project" href="{esc(r["html_url"])}" target="_blank" rel="noopener">'
+            f'<div class="project__top">{FOLDER_SVG}{ARROW_SVG}</div>'
+            f'<h3>{esc(r["name"])}</h3><p>{esc(r.get("description") or "Belum ada deskripsi.")}</p>'
+            f'<div class="project__meta mono">{lang}<span>★ {r.get("stargazers_count") or 0}</span></div></a>')
+
+
+def post_card(p):
+    date = ""
+    if p.get("date"):
+        y, m, d = (int(x) for x in p["date"].split("-"))
+        date = f"{d} {MONTHS[m - 1]} {y}"
+    img = f'<img class="post__img" src="{esc(p["image"])}" alt="" loading="lazy" onerror="this.remove()">' if p.get("image") else ""
+    return (f'<a class="post" href="{esc(p["link"])}" target="_blank" rel="noopener">{img}'
+            f'<span class="post__date mono">{esc(date)}</span>'
+            f'<h3>{esc(p["title"])}</h3><p>{esc(p.get("excerpt"))}</p>'
+            f'<span class="post__more mono">Baca di Medium →</span></a>')
+
+
+def render_from_files():
+    """Write cards into index.html from whatever data/*.json currently holds."""
+    for name, kind, fn in (("repos.json", "projects", lambda d: [repo_card(r) for r in ai_repos(d)]),
+                           ("medium.json", "posts", lambda d: [post_card(p) for p in d[:6]])):
+        with open(os.path.join(OUT, name), encoding="utf-8") as f:
+            inject(kind, fn(json.load(f)))
 
 
 def update_repos():
@@ -74,4 +141,5 @@ if __name__ == "__main__":
         except Exception as e:  # keep the previous file if a source is down
             print(f"{fn.__name__} failed: {e}", file=sys.stderr)
             failed = True
+    render_from_files()
     sys.exit(1 if failed else 0)

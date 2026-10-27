@@ -16,8 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css?v=5">
   <script>
+    document.documentElement.classList.add('js');
     try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
 </head>
@@ -197,26 +198,52 @@
     </section>
 
     <!-- Penelitian -->
-    <section class="section wrap" id="penelitian" data-optional="research" hidden>
+    <section class="section wrap" id="penelitian" data-optional="research">
       <div class="section__head">
         <span class="section__num mono">04</span>
         <h2>Penelitian</h2>
-        <a class="section__link mono" id="scholarLink" href="#" target="_blank" rel="noopener">Google Scholar →</a>
+        <a class="section__link mono" id="scholarLink" href="https://scholar.google.co.id/citations?user=vs16vi0AAAAJ&amp;hl=id" target="_blank" rel="noopener">Google Scholar →</a>
       </div>
-      <ol class="pubs" id="pubList"></ol>
+      <ol class="pubs" id="pubList">
+        <li class="pub reveal">
+          <span class="pub__year mono">2026</span>
+          <div>
+            <h3><a href="https://scholar.google.com/scholar?q=%22Integrasi%20BiLSTM-GRU%20dan%20Retrieval-Augmented%20Generation%20untuk%20Prediksi%20Harga%20Saham%20Perbankan%22" target="_blank" rel="noopener">Integrasi BiLSTM-GRU dan Retrieval-Augmented Generation untuk Prediksi Harga Saham Perbankan</a></h3>
+            <p class="pub__authors"><strong>Roni Halim Saputra</strong>, Eri Zuliarso</p>
+            <p>Jurnal Minfo Polgan, 15(3), 2500–2508</p>
+          </div>
+        </li>
+        <li class="pub reveal">
+          <span class="pub__year mono">2025</span>
+          <div>
+            <h3><a href="https://scholar.google.com/scholar?q=%22Analisis%20dan%20Pengelompokan%20Kompetensi%20Karyawan%20Divisi%20Sewing%20dengan%20Metode%20Weighted%20Product%22" target="_blank" rel="noopener">Analisis dan Pengelompokan Kompetensi Karyawan Divisi Sewing dengan Metode Weighted Product</a></h3>
+            <p class="pub__authors">Suluh Hidayat, Heni Candra Kirana, <strong>Roni Halim Saputra</strong>, Kristiawan Nugroho, Eka Ardhianto</p>
+            <p>STORAGE: Jurnal Ilmiah Teknik dan Ilmu Komputer, 4(3), 250–257</p>
+          </div>
+        </li>
+        <li class="pub reveal">
+          <span class="pub__year mono">2023</span>
+          <div>
+            <h3><a href="https://scholar.google.com/scholar?q=%22Deteksi%20Penyakit%20Tomat%20melalui%20Citra%20Daun%20Menggunakan%20Metode%20Convolutional%20Neural%20Network%22" target="_blank" rel="noopener">Deteksi Penyakit Tomat melalui Citra Daun Menggunakan Metode Convolutional Neural Network</a></h3>
+            <p class="pub__authors">Rito Cipta Sigitta, <strong>Roni Halim Saputra</strong>, Fathulloh</p>
+            <p>Aviation Electronics, Information Technology, Telecommunications, Electricals, Controls (AVITEC), 5(1), 43–51</p>
+          </div>
+        </li>
+      </ol>
     </section>
 
     <!-- Tulisan -->
-    <section class="section wrap" id="tulisan" data-optional="writing" hidden>
+    <section class="section wrap" id="tulisan" data-optional="writing">
       <div class="section__head">
         <span class="section__num mono">05</span>
         <h2>Tulisan</h2>
-        <a class="section__link mono" id="mediumLink" href="#" target="_blank" rel="noopener">Medium →</a>
+        <a class="section__link mono" id="mediumLink" href="https://medium.com/@ronihalimsaputra" target="_blank" rel="noopener">Medium →</a>
       </div>
       <div class="posts" id="postList" aria-live="polite">
-        <div class="post post--skeleton"></div>
-        <div class="post post--skeleton"></div>
-        <div class="post post--skeleton"></div>
+        <!-- posts:start -->
+        <a class="post" href="https://medium.com/@ronihalimsaputra/prediksi-harga-saham-pt-bank-central-asia-tbk-bbca-menggunakan-long-short-term-memory-5fe5bcb97aad" target="_blank" rel="noopener"><img class="post__img" src="https://cdn-images-1.medium.com/max/1024/1*VhJLoqsVDfSpS95c_QhXJw.png" alt="" loading="lazy" onerror="this.remove()"><span class="post__date mono">12 Desember 2025</span><h3>Prediksi Harga Saham PT Bank Central Asia Tbk (BBCA) Menggunakan Long Short-Term Memory…</h3><p>Prediksi Harga Saham PT Bank Central Asia Tbk (BBCA) Menggunakan Long Short-Term Memory (LSTM)-Data Trend 2005–2025 PT Bank Central Asia Tbk (BCA) adalah bank…</p><span class="post__more mono">Baca di Medium →</span></a>
+        <a class="post" href="https://medium.com/@ronihalimsaputra/cryptography-face-off-rsa-vs-chacha20-in-optimizing-email-encryption-for-speed-and-safety-030266883aa2" target="_blank" rel="noopener"><img class="post__img" src="https://cdn-images-1.medium.com/max/1024/1*bOe4ON6_hI8dua8YjjYAeg.png" alt="" loading="lazy" onerror="this.remove()"><span class="post__date mono">4 September 2025</span><h3>Cryptography Face-Off: RSA vs. ChaCha20 in Optimizing Email Encryption for Speed and Safety</h3><p>When was the last time you thought about how secure your emails really are? Probably not very often — we usually just hit “send” and assume everything is safe.…</p><span class="post__more mono">Baca di Medium →</span></a>
+        <a class="post" href="https://medium.com/@ronihalimsaputra/data-science-for-transportation-4pl-powered-pricing-optimization-with-python-e5f35e119cd2" target="_blank" rel="noopener"><img class="post__img" src="https://cdn-images-1.medium.com/max/1024/1*azvl52KPJtZhDErHlXWouQ.png" alt="" loading="lazy" onerror="this.remove()"><span class="post__date mono">4 September 2025</span><h3>Data Science for Transportation: 4PL-Powered Pricing Optimization with Python</h3><p>Have you ever wonder how companies like Gojek , Grab , Maxim , Lalamove , or Deliveree figure out their per-kilometer delivery fees? Maybe you’ve noticed that…</p><span class="post__more mono">Baca di Medium →</span></a>        <!-- posts:end -->
       </div>
     </section>
 
@@ -228,9 +255,12 @@
         <a class="section__link mono" href="https://github.com/ronihs?tab=repositories" target="_blank" rel="noopener">Semua repositori →</a>
       </div>
       <div class="projects" id="projectList" aria-live="polite">
-        <div class="project project--skeleton"></div>
-        <div class="project project--skeleton"></div>
-        <div class="project project--skeleton"></div>
+        <!-- projects:start -->
+        <a class="project" href="https://github.com/ronihs/DeepNeuralNet" target="_blank" rel="noopener"><div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></div><h3>DeepNeuralNet</h3><p>Belajar MachineLearning dengan python</p><div class="project__meta mono"><span><span class="lang-dot"></span>Jupyter Notebook</span><span>★ 2</span></div></a>
+        <a class="project" href="https://github.com/ronihs/PySpark-project" target="_blank" rel="noopener"><div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></div><h3>PySpark-project</h3><p>PySpark Full ETL &amp; Machine Learning pipeline</p><div class="project__meta mono"><span><span class="lang-dot"></span>Jupyter Notebook</span><span>★ 1</span></div></a>
+        <a class="project" href="https://github.com/ronihs/ML-project" target="_blank" rel="noopener"><div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></div><h3>ML-project</h3><p>Belum ada deskripsi.</p><div class="project__meta mono"><span><span class="lang-dot"></span>Jupyter Notebook</span><span>★ 1</span></div></a>
+        <a class="project" href="https://github.com/ronihs/-pytorch-NN" target="_blank" rel="noopener"><div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></div><h3>-pytorch-NN</h3><p>Tugas Tes AI Researcher</p><div class="project__meta mono"><span><span class="lang-dot"></span>Jupyter Notebook</span><span>★ 1</span></div></a>
+        <a class="project" href="https://github.com/ronihs/RNN-RAG-LLM" target="_blank" rel="noopener"><div class="project__top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></div><h3>RNN-RAG-LLM</h3><p>Belum ada deskripsi.</p><div class="project__meta mono"><span><span class="lang-dot"></span>Jupyter Notebook</span><span>★ 0</span></div></a>        <!-- projects:end -->
       </div>
     </section>
 
@@ -247,10 +277,10 @@
           <li><a href="https://www.linkedin.com/in/roni-halim-saputra" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
             LinkedIn</a></li>
-          <li data-optional="research" hidden><a id="scholarSocial" href="#" target="_blank" rel="noopener">
+          <li data-optional="research"><a id="scholarSocial" href="https://scholar.google.co.id/citations?user=vs16vi0AAAAJ&amp;hl=id" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>
             Google Scholar</a></li>
-          <li data-optional="writing" hidden><a id="mediumSocial" href="#" target="_blank" rel="noopener">
+          <li data-optional="writing"><a id="mediumSocial" href="https://medium.com/@ronihalimsaputra" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="12" r="5"/><ellipse cx="16.5" cy="12" rx="2.5" ry="5"/><path d="M21.5 7.5v9"/></svg>
             Medium</a></li>
           <li><a href="https://www.instagram.com/roni_halim" target="_blank" rel="noopener">
@@ -269,6 +299,6 @@
     <a href="#top">Kembali ke atas ↑</a>
   </footer>
 
-  <script src="assets/main.js"></script>
+  <script src="assets/main.js?v=5"></script>
 </body>
 </html>

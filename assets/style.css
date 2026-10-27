@@ -258,8 +258,8 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
 .footer a:hover { color: var(--text); }
 
 /* Reveal */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
-.reveal.is-in { opacity: 1; transform: none; }
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.js .reveal.is-in { opacity: 1; transform: none; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
@@ -292,5 +292,5 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 1; transform: none; }
 }

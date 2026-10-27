@@ -8,28 +8,6 @@
   // Isi dengan username Medium tanpa '@', mis. 'ronihalim'
   var MEDIUM_USER = 'ronihalimsaputra';
 
-  // Daftar penelitian (dari Google Scholar). Tanpa 'url', judul mengarah ke pencarian Google Scholar.
-  var PUBLICATIONS = [
-    {
-      title: 'Integrasi BiLSTM-GRU dan Retrieval-Augmented Generation untuk Prediksi Harga Saham Perbankan',
-      authors: 'Roni Halim Saputra, Eri Zuliarso',
-      venue: 'Jurnal Minfo Polgan, 15(3), 2500–2508',
-      year: 2026
-    },
-    {
-      title: 'Analisis dan Pengelompokan Kompetensi Karyawan Divisi Sewing dengan Metode Weighted Product',
-      authors: 'Suluh Hidayat, Heni Candra Kirana, Roni Halim Saputra, Kristiawan Nugroho, Eka Ardhianto',
-      venue: 'STORAGE: Jurnal Ilmiah Teknik dan Ilmu Komputer, 4(3), 250–257',
-      year: 2025
-    },
-    {
-      title: 'Deteksi Penyakit Tomat melalui Citra Daun Menggunakan Metode Convolutional Neural Network',
-      authors: 'Rito Cipta Sigitta, Roni Halim Saputra, Fathulloh',
-      venue: 'Aviation Electronics, Information Technology, Telecommunications, Electricals, Controls (AVITEC), 5(1), 43–51',
-      year: 2023
-    }
-  ];
-
   // Kata kunci untuk memilih repo AI / ML / DL dari GitHub
   var AI_KEYWORDS = /(\bai\b|ml|machine|learning|deep|neural|\bnn\b|cnn|rnn|lstm|gan|torch|tensorflow|keras|llm|rag|nlp|vision|spark|classif|predict|regress|cluster|model|data)/i;
 
@@ -100,31 +78,11 @@
   onScroll();
 
   // ---------- Penelitian ----------
-  if (SCHOLAR_URL || PUBLICATIONS.length) {
+  // Daftar penelitian ditulis langsung di index.html (#pubList)
+  if (SCHOLAR_URL) {
     enable('research');
-    ['scholarLink', 'scholarSocial'].forEach(function (id) {
-      var a = document.getElementById(id);
-      if (SCHOLAR_URL) a.href = SCHOLAR_URL;
-      else a.parentNode.removeChild(a);
-    });
-    var pubList = document.getElementById('pubList');
-    if (PUBLICATIONS.length) {
-      pubList.innerHTML = PUBLICATIONS
-        .slice()
-        .sort(function (a, b) { return (b.year || 0) - (a.year || 0); })
-        .map(function (p) {
-          var url = p.url || 'https://scholar.google.com/scholar?q=' + encodeURIComponent('"' + p.title + '"');
-          var authors = p.authors
-            ? '<p class="pub__authors">' + esc(p.authors).replace('Roni Halim Saputra', '<strong>Roni Halim Saputra</strong>') + '</p>'
-            : '';
-          return '<li class="pub reveal"><span class="pub__year mono">' + esc(p.year || '') + '</span>' +
-            '<div><h3><a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(p.title) + '</a></h3>' +
-            authors + (p.venue ? '<p>' + esc(p.venue) + '</p>' : '') + '</div></li>';
-        }).join('');
-    } else {
-      pubList.innerHTML = '<li class="projects__empty">Daftar lengkap penelitian tersedia di ' +
-        '<a href="' + esc(SCHOLAR_URL) + '" target="_blank" rel="noopener">Google Scholar</a>.</li>';
-    }
+    document.getElementById('scholarLink').href = SCHOLAR_URL;
+    document.getElementById('scholarSocial').href = SCHOLAR_URL;
   }
 
   // ---------- Tulisan (Medium) ----------
@@ -134,6 +92,14 @@
     document.getElementById('mediumLink').href = mediumUrl;
     document.getElementById('mediumSocial').href = mediumUrl;
     var postList = document.getElementById('postList');
+    // Kartu sudah ditulis ke HTML oleh GitHub Actions; fetch hanya bila kosong
+    if (!postList.querySelector('.post')) loadPosts();
+  }
+
+  function loadPosts() {
+    var postList = document.getElementById('postList');
+    var mediumUrl = 'https://medium.com/@' + MEDIUM_USER;
+    postList.innerHTML = '<div class="post post--skeleton"></div><div class="post post--skeleton"></div><div class="post post--skeleton"></div>';
     var fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
     // Data lokal (diperbarui GitHub Actions), lalu rss2json sebagai cadangan
     loadFirst([
@@ -180,8 +146,8 @@
       .sort(function (a, b) { return b.stargazers_count - a.stargazers_count || new Date(b.pushed_at) - new Date(a.pushed_at); })
       .slice(0, 9);
   }
-  // Data lokal (diperbarui GitHub Actions), lalu API GitHub sebagai cadangan
-  loadFirst([
+  // Kartu sudah ditulis ke HTML oleh GitHub Actions; fetch hanya bila kosong
+  if (!projectList.querySelector('.project')) loadFirst([
     function () { return getJSON('data/repos.json').then(aiRepos); },
     function () { return getJSON('https://api.github.com/users/' + GITHUB_USER + '/repos?per_page=100&sort=updated').then(aiRepos); }
   ])
