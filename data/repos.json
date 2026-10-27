@@ -1,11 +1,41 @@
 [
   {
+    "name": "-pytorch-NN",
+    "description": "AI Researcher",
+    "language": "Jupyter Notebook",
+    "stargazers_count": 1,
+    "html_url": "https://github.com/ronihs/-pytorch-NN",
+    "pushed_at": "2021-09-09T03:56:41Z",
+    "fork": false,
+    "topics": []
+  },
+  {
+    "name": "ML-project",
+    "description": "ML project for everyone",
+    "language": "Jupyter Notebook",
+    "stargazers_count": 1,
+    "html_url": "https://github.com/ronihs/ML-project",
+    "pushed_at": "2022-10-19T03:10:03Z",
+    "fork": false,
+    "topics": []
+  },
+  {
+    "name": "RNN-RAG-LLM",
+    "description": "Integrasi BiLSTM–GRU dan Retrieval-Augmented Generation untuk Prediksi Harga Saham Perbankan",
+    "language": "Jupyter Notebook",
+    "stargazers_count": 0,
+    "html_url": "https://github.com/ronihs/RNN-RAG-LLM",
+    "pushed_at": "2025-12-27T21:12:25Z",
+    "fork": false,
+    "topics": []
+  },
+  {
     "name": "ronihs.github.io",
     "description": "profilo",
     "language": "HTML",
     "stargazers_count": 1,
     "html_url": "https://github.com/ronihs/ronihs.github.io",
-    "pushed_at": "2026-10-27T03:51:00Z",
+    "pushed_at": "2026-10-27T04:17:09Z",
     "fork": false,
     "topics": []
   },
@@ -27,16 +57,6 @@
     "html_url": "https://github.com/ronihs/tabbyAPI",
     "pushed_at": "2026-01-20T21:57:42Z",
     "fork": true,
-    "topics": []
-  },
-  {
-    "name": "RNN-RAG-LLM",
-    "description": null,
-    "language": "Jupyter Notebook",
-    "stargazers_count": 0,
-    "html_url": "https://github.com/ronihs/RNN-RAG-LLM",
-    "pushed_at": "2025-12-27T21:12:25Z",
-    "fork": false,
     "topics": []
   },
   {
@@ -170,16 +190,6 @@
     "topics": []
   },
   {
-    "name": "-pytorch-NN",
-    "description": "Tugas Tes AI Researcher",
-    "language": "Jupyter Notebook",
-    "stargazers_count": 1,
-    "html_url": "https://github.com/ronihs/-pytorch-NN",
-    "pushed_at": "2021-09-09T03:56:41Z",
-    "fork": false,
-    "topics": []
-  },
-  {
     "name": "awesome-production-machine-learning",
     "description": "A curated list of awesome open source libraries to deploy, monitor, version and scale your machine learning",
     "language": null,
@@ -187,16 +197,6 @@
     "html_url": "https://github.com/ronihs/awesome-production-machine-learning",
     "pushed_at": "2022-10-20T03:05:03Z",
     "fork": true,
-    "topics": []
-  },
-  {
-    "name": "ML-project",
-    "description": null,
-    "language": "Jupyter Notebook",
-    "stargazers_count": 1,
-    "html_url": "https://github.com/ronihs/ML-project",
-    "pushed_at": "2022-10-19T03:10:03Z",
-    "fork": false,
     "topics": []
   }
 ]
