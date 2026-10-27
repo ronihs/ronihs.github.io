@@ -15,9 +15,9 @@
   --orb-3: #8fe0d2;
   --orb-opacity: .45;
   --glass: rgba(255, 255, 255, .72);
-  --serif: "Instrument Serif", Georgia, serif;
-  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --radius: 18px;
   --wrap: 1160px;
   color-scheme: light;
@@ -158,9 +158,9 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ccf6a; box-shadow: 0 0 0 0 rgba(60,207,106,.6); animation: pulse 2s infinite; }
 @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(60,207,106,0); } 100% { box-shadow: 0 0 0 0 rgba(60,207,106,0); } }
 .hero__title {
-  font-family: var(--serif); font-size: clamp(52px, 8.2vw, 112px); line-height: .95; letter-spacing: -.02em;
+  font-family: var(--display); font-weight: 800; font-size: clamp(44px, 6.6vw, 88px); line-height: 1.02; letter-spacing: -.04em;
 }
-.hero__title em { font-style: italic; color: var(--accent); }
+.hero__title em { font-style: normal; color: var(--accent); }
 .hero__lead { margin-top: 28px; max-width: 520px; font-size: 18px; color: var(--muted); }
 .hl { color: var(--text); background: linear-gradient(transparent 62%, var(--accent-soft) 62%); }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
@@ -193,14 +193,14 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 /* ---------- Sections ---------- */
 .section { padding-top: 112px; padding-bottom: 8px; }
 .section__head { display: flex; align-items: baseline; gap: 18px; padding-bottom: 22px; margin-bottom: 44px; border-bottom: 1px solid var(--line); }
-.section__head h2 { font-family: var(--serif); font-size: clamp(40px, 5vw, 60px); line-height: 1; }
+.section__head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; letter-spacing: -.03em; }
 .section__link { margin-left: auto; color: var(--muted); transition: color .2s; }
 .section__link:hover { color: var(--text); }
 
 /* About */
 .about { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; }
-.about__lead { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 40px); line-height: 1.2; }
-.about__lead strong { font-weight: 400; font-style: italic; color: var(--accent); }
+.about__lead { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.5vw, 30px); line-height: 1.4; letter-spacing: -.015em; }
+.about__lead strong { font-weight: 700; color: var(--accent); }
 .roles { display: grid; }
 .role { display: grid; grid-template-columns: 80px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px dashed var(--line); }
 .role:first-child { padding-top: 6px; }
@@ -212,7 +212,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .tl { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); position: relative; }
 .tl:first-child { padding-top: 4px; }
 .tl__year { color: var(--accent); padding-top: 6px; }
-.tl h3 { font-family: var(--serif); font-size: clamp(26px, 3vw, 34px); line-height: 1.15; }
+.tl h3 { font-family: var(--display); font-weight: 700; font-size: clamp(20px, 2.2vw, 24px); line-height: 1.3; letter-spacing: -.02em; }
 .tl p { margin-top: 6px; color: var(--muted); }
 .tl p.tl__role { color: var(--text); font-weight: 500; }
 
@@ -238,7 +238,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 a.post:hover { transform: translateY(-4px); border-color: var(--accent); }
 .post__img { width: calc(100% + 52px); margin: -26px -26px 4px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; background: var(--bg-2); }
 .post__date { color: var(--muted); }
-.post h3 { font-family: var(--serif); font-size: 26px; line-height: 1.15; }
+.post h3 { font-family: var(--display); font-weight: 700; font-size: 19px; line-height: 1.35; letter-spacing: -.015em; }
 .post p { color: var(--muted); font-size: 14.5px; flex: 1; }
 .post__more { color: var(--accent); }
 .post--skeleton { background: linear-gradient(100deg, var(--surface) 30%, var(--bg-2) 50%, var(--surface) 70%) 0 0 / 300% 100%; animation: shimmer 1.4s infinite linear; }
@@ -276,8 +276,8 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
 :root:not([data-theme="dark"]) .contact .contact__label { color: #8fb8ff; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact .contact__label { color: var(--accent-ink); } }
 :root[data-theme="dark"] .contact .contact__label { color: var(--accent-ink); }
-.contact__title { margin-top: 22px; font-family: var(--serif); font-size: clamp(44px, 6.5vw, 88px); line-height: 1; }
-.contact__title em { font-style: italic; opacity: .7; }
+.contact__title { margin-top: 22px; font-family: var(--display); font-weight: 800; font-size: clamp(36px, 5.4vw, 68px); line-height: 1.08; letter-spacing: -.04em; }
+.contact__title em { font-style: normal; opacity: .6; }
 .contact__mail {
   display: inline-block; margin-top: 36px; font-size: clamp(18px, 2.4vw, 26px); font-weight: 500;
   border-bottom: 2px solid currentColor; padding-bottom: 4px; word-break: break-all; transition: opacity .2s;
@@ -316,7 +316,7 @@ a.project:hover { transform: translateY(-4px); border-color: var(--accent); }
     background: var(--bg); padding: 0 16px;
   }
   .mobile-menu.is-open { max-height: 360px; border-bottom: 1px solid var(--line); }
-  .mobile-menu a { padding: 14px 0; border-top: 1px solid var(--line); font-family: var(--serif); font-size: 26px; }
+  .mobile-menu a { padding: 14px 0; border-top: 1px solid var(--line); font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.02em; }
   .brand__name { display: none; }
   .projects, .posts { grid-template-columns: 1fr; }
   .tl { grid-template-columns: 1fr; gap: 6px; }
