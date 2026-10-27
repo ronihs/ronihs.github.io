@@ -8,9 +8,27 @@
   // Isi dengan username Medium tanpa '@', mis. 'ronihalim'
   var MEDIUM_USER = 'ronihalimsaputra';
 
-  // Daftar penelitian (dari Google Scholar). Contoh:
-  // { title: 'Judul penelitian', venue: 'Nama Jurnal, Vol. 1 No. 2', year: 2024, url: 'https://...' }
-  var PUBLICATIONS = [];
+  // Daftar penelitian (dari Google Scholar). Tanpa 'url', judul mengarah ke pencarian Google Scholar.
+  var PUBLICATIONS = [
+    {
+      title: 'Integrasi BiLSTM-GRU dan Retrieval-Augmented Generation untuk Prediksi Harga Saham Perbankan',
+      authors: 'Roni Halim Saputra, Eri Zuliarso',
+      venue: 'Jurnal Minfo Polgan, 15(3), 2500–2508',
+      year: 2026
+    },
+    {
+      title: 'Analisis dan Pengelompokan Kompetensi Karyawan Divisi Sewing dengan Metode Weighted Product',
+      authors: 'Suluh Hidayat, Heni Candra Kirana, Roni Halim Saputra, Kristiawan Nugroho, Eka Ardhianto',
+      venue: 'STORAGE: Jurnal Ilmiah Teknik dan Ilmu Komputer, 4(3), 250–257',
+      year: 2025
+    },
+    {
+      title: 'Deteksi Penyakit Tomat melalui Citra Daun Menggunakan Metode Convolutional Neural Network',
+      authors: 'Rito Cipta Sigitta, Roni Halim Saputra, Fathulloh',
+      venue: 'Aviation Electronics, Information Technology, Telecommunications, Electricals, Controls (AVITEC), 5(1), 43–51',
+      year: 2023
+    }
+  ];
 
   // Kata kunci untuk memilih repo AI / ML / DL dari GitHub
   var AI_KEYWORDS = /(\bai\b|ml|machine|learning|deep|neural|\bnn\b|cnn|rnn|lstm|gan|torch|tensorflow|keras|llm|rag|nlp|vision|spark|classif|predict|regress|cluster|model|data)/i;
@@ -71,11 +89,13 @@
         .slice()
         .sort(function (a, b) { return (b.year || 0) - (a.year || 0); })
         .map(function (p) {
-          var title = p.url
-            ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.title) + '</a>'
-            : esc(p.title);
+          var url = p.url || 'https://scholar.google.com/scholar?q=' + encodeURIComponent('"' + p.title + '"');
+          var authors = p.authors
+            ? '<p class="pub__authors">' + esc(p.authors).replace('Roni Halim Saputra', '<strong>Roni Halim Saputra</strong>') + '</p>'
+            : '';
           return '<li class="pub reveal"><span class="pub__year mono">' + esc(p.year || '') + '</span>' +
-            '<div><h3>' + title + '</h3>' + (p.venue ? '<p>' + esc(p.venue) + '</p>' : '') + '</div></li>';
+            '<div><h3><a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(p.title) + '</a></h3>' +
+            authors + (p.venue ? '<p>' + esc(p.venue) + '</p>' : '') + '</div></li>';
         }).join('');
     } else {
       pubList.innerHTML = '<li class="projects__empty">Daftar lengkap penelitian tersedia di ' +

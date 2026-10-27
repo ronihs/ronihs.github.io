@@ -187,12 +187,14 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 
 /* Penelitian */
 .pubs { list-style: none; margin: 0; padding: 0; counter-reset: pub; }
-.pub { display: grid; grid-template-columns: 80px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.pub { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
 .pub__year { color: var(--accent); padding-top: 3px; }
 .pub h3 { font-size: 18px; font-weight: 600; line-height: 1.4; }
 .pub h3 a { background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 1px no-repeat; transition: background-size .3s; }
 .pub h3 a:hover { background-size: 100% 1px; }
 .pub p { margin-top: 6px; color: var(--muted); font-size: 15px; font-style: italic; }
+.pub p.pub__authors { font-style: normal; }
+.pub__authors strong { color: var(--text); font-weight: 600; }
 
 /* Tulisan */
 .posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
