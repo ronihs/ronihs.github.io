@@ -16,13 +16,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=6">
+  <link rel="stylesheet" href="assets/style.css?v=7">
   <script>
     document.documentElement.classList.add('js');
     try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
 </head>
 <body>
+  <div class="bg" aria-hidden="true">
+    <div class="bg__grid"></div>
+    <span class="bg__orb bg__orb--1"></span>
+    <span class="bg__orb bg__orb--2"></span>
+    <span class="bg__orb bg__orb--3"></span>
+    <div class="bg__noise"></div>
+  </div>
   <a class="skip" href="#main">Lewati ke konten</a>
 
   <header class="nav" id="top">
@@ -293,6 +300,6 @@
     <a href="#top">Kembali ke atas ↑</a>
   </footer>
 
-  <script src="assets/main.js?v=6"></script>
+  <script src="assets/main.js?v=7"></script>
 </body>
 </html>
