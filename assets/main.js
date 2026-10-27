@@ -133,8 +133,8 @@
   var projectList = document.getElementById('projectList');
   function showEmpty() {
     projectList.innerHTML =
-      '<div class="projects__empty">Proyek tersedia di GitHub — <a href="https://github.com/' + GITHUB_USER +
-      '?tab=repositories" target="_blank" rel="noopener">lihat semua repositori</a>.</div>';
+      '<div class="projects__empty">Proyek tersedia di GitHub. <a href="https://github.com/' + GITHUB_USER +
+      '?tab=repositories" target="_blank" rel="noopener">Lihat semua repositori</a>.</div>';
   }
   function aiRepos(repos) {
     return repos
